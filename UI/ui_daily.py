@@ -28,7 +28,11 @@ class Dialog_daily(QDialog, Ui_Dialog_daily):
         self.dateEdit.setDate( self.qdate )
     
         #declare customer list object
-        self.cfile = Customer_list()
+        try:
+            self.cfile = Customer_list()
+        except IOError as e:
+            print('Error:' + str(e) )
+            return None
         
         #read company list
         self.m_clist={}

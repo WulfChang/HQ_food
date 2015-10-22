@@ -49,5 +49,10 @@ class Dialog_main(QDialog, Ui_Dialog):
         customer edit
         """
         ui_edit = Dialog_cedit()
-        ui_edit.exec_()
+        
+        if ui_edit != None:
+            ui_edit.exec_()            
+        else:
+            print('Open customer edit failed!')
+            
 

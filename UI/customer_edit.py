@@ -28,7 +28,11 @@ class Dialog_cedit(QDialog, Ui_Dialog):
         self.pushButton_add.setVisible(False)
         
         #declare object
-        self.clist = Customer_list()
+        try:
+            self.clist = Customer_list()
+        except IOError as e:
+            print('Error:' + str(e) )
+        
         self.cprice = Customer_price()
         
         #read company list

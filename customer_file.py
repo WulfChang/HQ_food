@@ -28,7 +28,7 @@ class Customer_list():
                #convert to dict type 
                 self.getCdict( self.clist )
             else:
-                print 'file is not existed!'
+                raise IOError('customer list file does not exist!')
                 
         def cvtUTF8(self,  str):
             str_temp = str.encode('utf8')                

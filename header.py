@@ -2,7 +2,7 @@
 
 # path of data
 
-HQ_PATH = 'HQ_food/data/'
+HQ_PATH = '/data/'
 
 HQ_PRICE_PATH = HQ_PATH + 'price/'
 
