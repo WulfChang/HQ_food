@@ -4,13 +4,17 @@ An accounting software for Food company
 - Customer setting: add customer/add price list
 - Monthly Report
 
+*UIinterface is designed via PyQt4
+
+-------------------------------------------------------
 The documentation is located in data folder including:
 - customer list.yaml
 - price folder/HQ_startdate_enddate_vX_guestnum.yaml
 - accounting folder/HQ_month_guestnum
-
+-------------------------------------------------------
 
 Author: Wulf Chang
+Mail: wythe.c.77@gmail.com
 
 History: 2015/10/13 beta version v1.1
          2015/11/03 release version v2.1
