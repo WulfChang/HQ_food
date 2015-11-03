@@ -5,7 +5,8 @@ An accounting software for Food company
 - Monthly Report
 
 The documentation is located in data folder including:
-- customer list
+- customer list.yaml
+- price folder
 
 
 Author: Wulf Chang
