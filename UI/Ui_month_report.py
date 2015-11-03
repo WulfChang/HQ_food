@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/home/wulf/HQfood/HQ_food/UI/month_report.ui'
+# Form implementation generated from reading ui file '/home/wulf/Program/HQ_food/UI/month_report.ui'
 #
-# Created: Mon Oct  5 13:57:29 2015
+# Created: Tue Nov  3 09:16:06 2015
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!

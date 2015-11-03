@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/home/wulf/HQfood/HQ_food/UI/main_dialog.ui'
+# Form implementation generated from reading ui file '/home/wulf/Program/HQ_food/UI/main_dialog.ui'
 #
-# Created: Mon Oct  5 13:57:26 2015
+# Created: Tue Nov  3 09:05:54 2015
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!

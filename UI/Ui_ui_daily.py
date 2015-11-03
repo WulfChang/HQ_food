@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/home/wulf/HQfood/HQ_food/UI/ui_daily.ui'
+# Form implementation generated from reading ui file '/home/wulf/Program/HQ_food/UI/ui_daily.ui'
 #
-# Created: Mon Oct  5 13:57:31 2015
+# Created: Tue Nov  3 09:05:52 2015
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt4 import QtCore, QtGui
-from header import PRODUCT_NAME
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -144,12 +143,12 @@ class Ui_Dialog_daily(object):
     def retranslateUi(self, Dialog_daily):
         Dialog_daily.setWindowTitle(_translate("Dialog_daily", "每日銷售", None))
         self.dateEdit.setDisplayFormat(_translate("Dialog_daily", "yyyy/MM/dd", None))
-        self.label_3.setText(_translate("Dialog_daily", PRODUCT_NAME[0], None))
-        self.label_4.setText(_translate("Dialog_daily", PRODUCT_NAME[1], None))
-        self.label_5.setText(_translate("Dialog_daily", PRODUCT_NAME[2], None))
-        self.label_6.setText(_translate("Dialog_daily", PRODUCT_NAME[3], None))
-        self.label_7.setText(_translate("Dialog_daily", PRODUCT_NAME[4], None))
-        self.label_8.setText(_translate("Dialog_daily", PRODUCT_NAME[5], None))
+        self.label_3.setText(_translate("Dialog_daily", "BIG", None))
+        self.label_4.setText(_translate("Dialog_daily", "SMALL", None))
+        self.label_5.setText(_translate("Dialog_daily", "OIL", None))
+        self.label_6.setText(_translate("Dialog_daily", "TRI", None))
+        self.label_7.setText(_translate("Dialog_daily", "STINKY", None))
+        self.label_8.setText(_translate("Dialog_daily", "Milk", None))
 
 
 if __name__ == "__main__":

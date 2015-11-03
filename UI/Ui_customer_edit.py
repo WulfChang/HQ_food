@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/home/wulf/HQfood/HQ_food/UI/customer_edit.ui'
+# Form implementation generated from reading ui file '/home/wulf/Program/HQ_food/UI/customer_edit.ui'
 #
-# Created: Mon Oct  5 13:57:34 2015
+# Created: Tue Nov  3 09:05:52 2015
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt4 import QtCore, QtGui
-from header import PRODUCT_NAME
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -191,21 +190,21 @@ class Ui_Dialog(object):
         self.label.setText(_translate("Dialog", "NOTE:新增資料重開視窗才會出現", None))
         self.pushButton_addguest.setText(_translate("Dialog", "新增", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("Dialog", "新增客戶", None))
-        self.label_1.setText(_translate("Dialog", "開始日期:", None))
+        self.label_1.setText(_translate("Dialog", "From:", None))
         self.dateEdit_from.setDisplayFormat(_translate("Dialog", "yyyy/MM/dd", None))
-        self.label_2.setText(_translate("Dialog", "結束日期:", None))
+        self.label_2.setText(_translate("Dialog", "To:", None))
         self.dateEdit_to.setDisplayFormat(_translate("Dialog", "yyyy/MM/dd", None))
         self.label_10.setText(_translate("Dialog", "項目", None))
-        self.label_3.setText(_translate("Dialog", PRODUCT_NAME[0], None))
-        self.label_4.setText(_translate("Dialog", PRODUCT_NAME[1], None))
-        self.label_5.setText(_translate("Dialog", PRODUCT_NAME[2], None))
-        self.label_6.setText(_translate("Dialog", PRODUCT_NAME[3], None))
-        self.label_7.setText(_translate("Dialog", PRODUCT_NAME[4], None))
-        self.label_8.setText(_translate("Dialog", PRODUCT_NAME[5], None))
+        self.label_3.setText(_translate("Dialog", "Big", None))
+        self.label_4.setText(_translate("Dialog", "Small", None))
+        self.label_5.setText(_translate("Dialog", "Oil", None))
+        self.label_6.setText(_translate("Dialog", "Tri", None))
+        self.label_7.setText(_translate("Dialog", "Stinky", None))
+        self.label_8.setText(_translate("Dialog", "Milk", None))
         self.label_9.setText(_translate("Dialog", "$", None))
-        self.pushButton_load.setText(_translate("Dialog", "讀取", None))
-        self.pushButton_add.setText(_translate("Dialog", "新增", None))
-        self.pushButton_edit.setText(_translate("Dialog", "編輯", None))
+        self.pushButton_load.setText(_translate("Dialog", "Load", None))
+        self.pushButton_add.setText(_translate("Dialog", "Add", None))
+        self.pushButton_edit.setText(_translate("Dialog", "Edit", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("Dialog", "價格設定", None))
 
 

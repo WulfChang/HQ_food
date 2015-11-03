@@ -10,7 +10,6 @@ from PyQt4.QtCore import pyqtSignature, QDate
 from Ui_ui_daily import Ui_Dialog_daily
 from customer_file import Customer_list
 from day_file import Dfile
-from header import ERROR_MSG
 
 class Dialog_daily(QDialog, Ui_Dialog_daily):
     """
@@ -31,8 +30,7 @@ class Dialog_daily(QDialog, Ui_Dialog_daily):
         try:
             self.cfile = Customer_list()
         except IOError as e:
-            print('Error:' + str(e) )
-            return None
+            raise IOError(e)
         
         #read company list
         self.m_clist={}
@@ -76,8 +74,7 @@ class Dialog_daily(QDialog, Ui_Dialog_daily):
         #open file
         self.dfile.open_dfile()
         
-        if self.dfile.checkRwrite( self.qdate.day() ) == True:
-            
+        if self.dfile.ischeckRwrite( self.qdate.day() ) == True:            
             #write ui data into file
             i_big = self.spinBox_big.value()
             i_small = self.spinBox_small.value()
@@ -87,10 +84,8 @@ class Dialog_daily(QDialog, Ui_Dialog_daily):
             i_milk = self.spinBox_milk.value()
         
             spindata = [ i_big,  i_small,  i_oil,  i_tri,  i_stinky, i_milk]
-            self.dfile.write_dfile(spindata)
             
-        else:
-            self.textEdit.append( ERROR_MSG[0] )
+            self.dfile.write_dfile(spindata)
             
         #close file
         self.dfile.close_dfile() 

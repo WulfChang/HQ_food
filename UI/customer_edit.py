@@ -31,7 +31,7 @@ class Dialog_cedit(QDialog, Ui_Dialog):
         try:
             self.clist = Customer_list()
         except IOError as e:
-            print('Error:' + str(e) )
+            raise IOError(e)
         
         self.cprice = Customer_price()
         
@@ -164,9 +164,13 @@ class Dialog_cedit(QDialog, Ui_Dialog):
         """
         add new customer to yaml list
         """
-        if self.lineEdit_addguest.text() != '':
-            str_name = str( self.lineEdit_addguest.text().toUtf8() )
-            self.clist.writeCompany( str_name.decode('utf8') )       
+        str_name = str( self.lineEdit_addguest.text().toUtf8() )
+        
+        try:
+            self.clist.writeCompany( str_name.decode('utf8') )
+        except ValueError as e:
+            self.textEdit.append(str(e))
+            
 
         
     """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

@@ -11,14 +11,21 @@ Function: edit customer file,  customer_list.yaml,  guestX.yaml
 Author: Wulf Chang
 History: 2015/09/11 programming start
              2015/10/05 beta version ready
+             2015/11/02 add Customer_list class raise error
 """
 
 HQ_path = header.HQ_PATH
 HQ_price = header.HQ_PRICE_PATH
 HQ_list = header.HQ_LIST_NAME
 
-
+"""
+Edit the list of customer, the list is saved in "HQ_path+HQ_list" with yaml format
+"""
 class Customer_list():
+    
+        """
+        open file and load yaml, which is a company list
+        """        
         def __init__(self):            
             if os.path.exists( HQ_path+HQ_list ):
                 #fptr open
@@ -26,149 +33,183 @@ class Customer_list():
                 #load file
                 self.clist = yaml.load( self.list_str )
                #convert to dict type 
-                self.getCdict( self.clist )
+                self.__getCdict( self.clist )
             else:
-                raise IOError('customer list file does not exist!')
+                #file opening error
+                raise IOError(header.ERROR_MSG[0])
                 
-        def cvtUTF8(self,  str):
-            str_temp = str.encode('utf8')                
-            return str_temp
-        
-        def getCdict(self, clist):            
-            #convert clist(matrix) to cdict(dictionary)
-            self.cdict = {}
-            for i in clist:
-                self.cdict.update( i )           
-            return self.cdict
-    
+        """
+        write company into yaml list
+        """
+        def writeCompany(self,  name):            
+            if name:                    
+                #write data into yaml
+                current_num = self.__numCompany()+1
+                data = [{name: current_num}]
+                yaml.dump(data,  self.list_str)
+                
+                #add to dict
+                self.__addCdict(data)
+            else:
+                raise ValueError(header.ERROR_MSG[1])
+                
+        """
+        read keys of company
+        """    
         def readCompany(self):
-            return self.cdict.keys()
-            
+            return self.cdict.keys()  
+        
+        """
+        read key of company from input name string
+        """
         def readCvalue(self, name):
             name = name.decode('utf8')
             return self.cdict[name]
+        
+        """
+        convert to UTF8
+        """
+        def __cvtUTF8(self,  str):
+            str_temp = str.encode('utf8')                
+            return str_temp
+        
+        """
+        convert list to dict
+        """
+        def __getCdict(self, clist):
+            #declare
+            self.cdict = {}
             
-        def numCompany(self):
+            if clist != []:
+                #convert clist(matrix) to cdict(dictionary)
+                for i in clist:
+                    self.cdict.update( i )           
+            
+            return self.cdict
+        
+        """
+        count number of company in the dict
+        """    
+        def __numCompany(self):
             return len(self.cdict)
-            
-        def writeCompany(self,  name):
-            #write data into yaml
-            current_num = self.numCompany()+1
-            data = [{name: current_num}]
-            yaml.dump(data,  self.list_str)
-            
-            #add to dict
-            self.addCdict(data)
-            
-        def addCdict(self, data):
-            self.cdict.update(data[0])
-            
-        def closeCfile(self):
-            self.list_str.close()
-        
-        
-        
+
+        """
+        add data to cdict
+        """
+        def __addCdict(self, data):
+            self.cdict.update(data[0])        
+ 
+"""
+load customer setting price from guest number and version
+(the guest number is defined in customer list file)
+"""        
 class Customer_price():
         
-        INI_DATE = header.NONVALID
-        
+        """
+        Initialization
+        """
         def __init__(self):
-            print 'init'
+            #assign the version non valid date
+            self.INI_DATE = header.NONVALID
             
-        #obtain number of version 
+        """    
+        obtain number of version 
+        """
         def numGuestprice(self,  i_guestnum):
             str_num_file = fnmatch.filter(os.listdir(HQ_price), '*_'+ str(i_guestnum)+'.yaml')
             num_file = len(str_num_file)
             return num_file
+        """
+        get start date of specific version
+        """
+        def getStartdate(self,  i_guestnum, i_version):            
+            str_filename = self.__getFilename(  i_guestnum, i_version )
+            
+            if str_filename:
+                return str_filename[3:11]
+            else:
+                raise NameError(header.ERROR_MSG[2])
         
-        #get start date of specific version
-        def getStartdate(self,  i_guestnum, i_version):
+        """ 
+        get end date of specifict version
+        """
+        def getEnddate(self,  i_guestnum, i_version):            
+            str_filename = self.__getFilename(  i_guestnum, i_version )
             
-            str_filename = self.getFilename(  i_guestnum, i_version )            
-            return str_filename[3:11]
-         
-        #get end date of specifict version
-        def getEnddate(self,  i_guestnum, i_version):
+            if str_filename:
+                return str_filename[12:20]
+            else:
+                raise NameError(header.ERROR_MSG[2])
             
-            str_filename = self.getFilename(  i_guestnum, i_version )           
-            return str_filename[12:20]
-       
-        #establish new file name   
-        def formNewfilename(self,  str_nowdate,  i_newversion,  i_guestnum):
-            
-            str_nfilename =  HQ_price + 'HQ_'+ str_nowdate+'_' + self.INI_DATE +'_v'+str(i_newversion)+'_'+str(i_guestnum)+'.yaml'
-            return str_nfilename
-            
-        #write price into file, which is totally new
-        def writePrice(self,  i_guestnum, str_nowdate,  m_data ):
-            
+        """    
+        write price into file, which is totally new
+        """
+        def writePrice(self,  i_guestnum, str_nowdate,  m_data ):            
             #read current version
             current_version = self.numGuestprice( i_guestnum )
             
-            if current_version != 0:
-                #end current version price file
+            #end current version price file
+            if current_version != 0:                
                 self.endFile( i_guestnum,  current_version, str_nowdate  )
-                
+            
+            #set newest version    
             newversion = current_version+1
             
             #form filename
-            str_version_filename = self.formNewfilename( str_nowdate, newversion, i_guestnum )
-            fprt_price = open(  str_version_filename,  'w+' )
+            str_version_filename = self.__formNewfilename( str_nowdate, newversion, i_guestnum )
             
             #write into file
-            data = [{'big': m_data[0]},  {'small': m_data[1]}, {'oil': m_data[2]},  {'tri': m_data[3]},  {'stinky': m_data[4]},  {'milk': m_data[5]}]
-            yaml.dump(data,  fprt_price)
+            with open(  str_version_filename,  'w+' ) as fprt_price:         
+                data = [{'big': m_data[0]},  {'small': m_data[1]}, {'oil': m_data[2]},  {'tri': m_data[3]},  {'stinky': m_data[4]},  {'milk': m_data[5]}]
+                yaml.dump(data,  fprt_price)
         
-        #get full file name   
-        def getFilename(self,  i_guestnum, i_version ):
-            #search file
-            part_name = '*v' + str(i_version)+'_'+str(i_guestnum)+'.yaml'
-            filename = fnmatch.filter(os.listdir(HQ_price), part_name)
-            str_filename = filename[0]
-            
-            return str_filename
-            
+        """    
+        read price from file
+        """        
         def readPrice(self,  i_guestnum,  i_version):
+            
+            self.dict_price = {}
+            
             #get full file name
-            str_fullname = self.getFilename(  i_guestnum,  i_version )
+            str_fullname = self.__getFilename(  i_guestnum,  i_version )
             
-            #open file
-            fptr_file = open( HQ_price+str_fullname,  'r')
-            m_price = yaml.load( fptr_file )
+            #open file and covnert list to dict
+            with open( HQ_price+str_fullname,  'r') as fptr_file:
+                m_price = yaml.load( fptr_file )            
+                self.dict_price = self.__getCdict( m_price )
             
-            #convert list to dict
-            self.dict_price = self.getCdict( m_price )
-            
-            return self.dict_price
-
-        def getCdict(self, clist):            
-            #convert clist(matrix) to cdict(dictionary)
-            self.cdict = {}
-            for i in clist:
-                self.cdict.update(i)                
-            return self.cdict
-           
+            if self.dict_price:  
+                return self.dict_price
+            else:
+                raise  IOError(header.ERROR_MSG[0])
+        
+        """
+        convert dict to list
+        """
         def getClist(self,  cdict):
-            return [ cdict['big'],  cdict['small'],  cdict['oil'],  cdict['tri'],  cdict['stinky'],  cdict['milk'] ]
-            
-        #terminate the price file, namely, add end date in the file name
+            return [ cdict['big'],  cdict['small'],  cdict['oil'],  cdict['tri'],  cdict['stinky'],  cdict['milk'] ]    
+
+        """    
+        terminate the price file, namely, add end date in the file name
+        """
         def endFile(self,  i_guestnum, i_version,  end_date):
             
             #current file name and current fiel end date
-            current_fname = self.getFilename(i_guestnum, i_version)
+            current_fname = self.__getFilename(i_guestnum, i_version)
                
             #rename
             os.rename( HQ_price+current_fname,  HQ_price+current_fname.replace( self.INI_DATE,  end_date))
             
-        #select setting price and return its  version
+        """    
+        select setting price and return its  version
+        """
         def selectPrice( self,  i_guestnum, str_accountdate ):
             
             #count total file number
             i_pricenumber = self.numGuestprice(i_guestnum)
             
             if i_pricenumber == 0:
-                print 'No price setting file!'
-                return 0
+                raise IOError(header.ERROR_MSG[0])
             else:
                 #search from latest version
                 while i_pricenumber > 0:
@@ -181,6 +222,33 @@ class Customer_price():
                     #search previous one version
                     i_pricenumber -=1
                     
-                print 'please check price setting file'
-                return 0
+                raise IOError(header.ERROR_MSG[0])
+                        
+        """
+        convert clist(matrix) to cdict(dictionary)
+        """
+        def __getCdict(self, clist):            
+            self.cdict = {}
+            for i in clist:
+                self.cdict.update(i)                
+            return self.cdict
+                        
+        """        
+        establish new file name
+        """   
+        def __formNewfilename(self,  str_nowdate,  i_newversion,  i_guestnum):
             
+            str_nfilename =  HQ_price + 'HQ_'+ str_nowdate+'_' + self.INI_DATE +'_v'+str(i_newversion)+'_'+str(i_guestnum)+'.yaml'
+            return str_nfilename
+            
+                        
+        """
+        get full file name   
+        """
+        def __getFilename(self,  i_guestnum, i_version ):
+            #search file
+            part_name = '*v' + str(i_version)+'_'+str(i_guestnum)+'.yaml'
+            filename = fnmatch.filter(os.listdir(HQ_price), part_name)
+            str_filename = filename[0]
+            
+            return str_filename
