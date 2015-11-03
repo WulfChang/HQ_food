@@ -6,7 +6,7 @@ An accounting software for Food company
 
 The documentation is located in data folder including:
 - customer list.yaml
-- price folder
+- price folder/HQ_startdate_enddate_vX_guestnum.yam
 
 
 Author: Wulf Chang
